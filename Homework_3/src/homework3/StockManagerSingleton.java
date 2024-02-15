@@ -1,12 +1,14 @@
 package homework3;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import mediaProducts.MediaProduct;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import mediaProducts.VinylRecordProduct;
+import mediaProducts.TapeRecordProduct;
+import mediaProducts.CDRecordProduct;
 
 public class StockManagerSingleton 
 {
@@ -117,6 +119,42 @@ public class StockManagerSingleton
 			System.out.println(product.toString()); // Use the toString to display the object details
 		}
 	}
+
+
+	public ArrayList<VinylRecordProduct> getVinylRecordList(ArrayList<MediaProduct> productList){
+		ArrayList<VinylRecordProduct> vinyls = new ArrayList<>();
+		for(MediaProduct product : productList){
+			if(product instanceof VinylRecordProduct){
+				vinyls.add((VinylRecordProduct) product);
+			}
+		}
+		return vinyls;
+	}
+	
+	public ArrayList<CDRecordProduct> getCDRecordsList(ArrayList<MediaProduct> productList){
+		
+		ArrayList<CDRecordProduct> cds = new ArrayList<>();
+		for(MediaProduct product : productList){
+			if(product instanceof CDRecordProduct){
+				cds.add((CDRecordProduct) product);
+			}
+		}
+		
+		return cds;
+		
+	}
+	
+	public ArrayList<TapeRecordProduct> getTapeRecordList(ArrayList<MediaProduct> productList){
+		ArrayList<TapeRecordProduct> tapes = new ArrayList<>();
+		for(MediaProduct product : productList){
+			if(product instanceof TapeRecordProduct){
+				tapes.add((TapeRecordProduct) product);
+			}
+		}
+		return tapes;
+	}
+
+
 	
 }
 
