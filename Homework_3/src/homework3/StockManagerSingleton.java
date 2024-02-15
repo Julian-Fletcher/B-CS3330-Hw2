@@ -11,7 +11,8 @@ import java.io.FileNotFoundException;
 public class StockManagerSingleton 
 {
 	private static StockManagerSingleton instance = null;
-	private final static String inventoryFilePath = "inventory.csv";
+	//src/homework2/studentData.txt
+	private final static String inventoryFilePath = "src/homework3/inventory.csv";
 	
 	// Media storage generic
 	ArrayList<MediaProduct> masterInventory = new ArrayList<>();	
@@ -34,26 +35,22 @@ public class StockManagerSingleton
 	{		
 		try
 		{
-			String type;
-			String title;
-			double price;
-			int year;
 			Genre fileGenre = null;
-			
-			String temp;
-			
-			
 			Scanner fileIn = new Scanner(new FileInputStream(inventoryFilePath));
-			fileIn.useDelimiter("\n");
+			//fileIn.useDelimiter(",|\n");
 			
 			while(fileIn.hasNext())
 			{
-				type = fileIn.next();
-				title = fileIn.next();
-				price = fileIn.nextDouble();
-				year = fileIn.nextInt();
-				temp = fileIn.next();
+				String nextLine = fileIn.nextLine();
+				String[] token = nextLine.split(",|\n");
 				
+				String type = token[0];
+				String title = token[1];	
+				double price = Double.parseDouble(token[2]);	
+				int year = Integer.parseInt(token[3]);			
+				String temp = token[4];	
+				
+				/*
 				switch(temp)
 				{
 					case "ROCK":
@@ -89,11 +86,14 @@ public class StockManagerSingleton
 						System.out.println("Invalid File Data");
 					}
 				}
+				*/
 				 
-				masterInventory.add(new MediaProduct(title, price, year, fileGenre));
+				//masterInventory.add(new MediaProduct(title, price, year, fileGenre));
 			}
+			
 			return true;
 		}
+			
 		catch(FileNotFoundException e)
 		{
 			e.printStackTrace();
