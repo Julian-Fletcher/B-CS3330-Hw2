@@ -27,6 +27,8 @@ public class Main {
 		
 		System.out.println("Results: " + add + " " +  add2 + " " +  add3 + " " + add4);
 		
+		stockManagerSingleton.initializeStock();
+		
 		stockManagerSingleton.printListOfMediaProduct(stockManagerSingleton.masterInventory);
 		
 		
