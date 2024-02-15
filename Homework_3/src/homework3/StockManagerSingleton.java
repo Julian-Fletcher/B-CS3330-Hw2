@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 public class StockManagerSingleton 
 {
 	private static StockManagerSingleton instance = null;
-	private final static String inventoryFilePath = "inventory.txt";
+	private final static String inventoryFilePath = "inventory.csv";
 	
 	// Media storage generic
 	ArrayList<MediaProduct> masterInventory = new ArrayList<>();	
@@ -31,17 +31,74 @@ public class StockManagerSingleton
 	}
 	
 	public boolean initializeStock()
-	{
+	{		
 		try
 		{
+			String type;
+			String title;
+			double price;
+			int year;
+			Genre fileGenre = null;
+			
+			String temp;
+			
+			
 			Scanner fileIn = new Scanner(new FileInputStream(inventoryFilePath));
+			fileIn.useDelimiter("\n");
+			
+			while(fileIn.hasNext())
+			{
+				type = fileIn.next();
+				title = fileIn.next();
+				price = fileIn.nextDouble();
+				year = fileIn.nextInt();
+				temp = fileIn.next();
+				
+				switch(temp)
+				{
+					case "ROCK":
+					{
+						fileGenre = Genre.ROCK;
+					}
+					case "POP":
+					{
+						fileGenre = Genre.POP;
+					}
+					case "JAZZ":
+					{
+						fileGenre = Genre.JAZZ;
+					}
+					case "CLASSICAL":
+					{
+						fileGenre = Genre.CLASSICAL;
+					}
+					case "HIP_HOP":
+					{
+						fileGenre = Genre.HIP_HOP;
+					}
+					case "ELECTRONIC":
+					{
+						fileGenre = Genre.ELECTRONIC;
+					}
+					case "CHILDREN":
+					{
+						fileGenre = Genre.CHILDREN;
+					}
+					default:
+					{
+						System.out.println("Invalid File Data");
+					}
+				}
+				 
+				masterInventory.add(new MediaProduct(title, price, year, fileGenre));
+			}
+			return true;
 		}
 		catch(FileNotFoundException e)
 		{
 			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 	
 	
