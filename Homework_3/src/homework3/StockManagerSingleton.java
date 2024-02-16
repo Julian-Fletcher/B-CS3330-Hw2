@@ -37,62 +37,24 @@ public class StockManagerSingleton
 	{		
 		try
 		{
-			Genre fileGenre = null;
 			Scanner fileIn = new Scanner(new FileInputStream(inventoryFilePath));
-			//fileIn.useDelimiter(",|\n");
+			String waste = fileIn.nextLine(); //assuming that the file element line is present
+											//get rid of that line
 			
 			while(fileIn.hasNext())
 			{
 				String nextLine = fileIn.nextLine();
-				String[] token = nextLine.split(",|\n");
+				String [] token = nextLine.split(","); //token out each element
 				
-				String type = token[0];
-				String title = token[1];	
-				double price = Double.parseDouble(token[2]);	
-				int year = Integer.parseInt(token[3]);			
-				String temp = token[4];	
-				
-				/*
-				switch(temp)
-				{
-					case "ROCK":
-					{
-						fileGenre = Genre.ROCK;
-					}
-					case "POP":
-					{
-						fileGenre = Genre.POP;
-					}
-					case "JAZZ":
-					{
-						fileGenre = Genre.JAZZ;
-					}
-					case "CLASSICAL":
-					{
-						fileGenre = Genre.CLASSICAL;
-					}
-					case "HIP_HOP":
-					{
-						fileGenre = Genre.HIP_HOP;
-					}
-					case "ELECTRONIC":
-					{
-						fileGenre = Genre.ELECTRONIC;
-					}
-					case "CHILDREN":
-					{
-						fileGenre = Genre.CHILDREN;
-					}
-					default:
-					{
-						System.out.println("Invalid File Data");
-					}
-				}
-				*/
-				 
-				//masterInventory.add(new MediaProduct(title, price, year, fileGenre));
+				String type = token[0]; //this element isn't in our MediaProduct constructor, but I needed it tokened out
+				String title = token[1];
+				double price = Double.parseDouble(token[2]); //parse numeric values
+				int year = Integer.parseInt(token[3]);
+				Genre fileGenre = Genre.valueOf(token[4]); //taking the string value and making it an enum
+
+				masterInventory.add(new MediaProduct(title, price, year, fileGenre));
 			}
-			
+			fileIn.close();
 			return true;
 		}
 			
