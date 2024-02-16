@@ -111,6 +111,30 @@ public class StockManagerSingleton
 		masterInventory.add(product);
 		return true; // No error checking right now
 	}
+
+	// Remove Item
+	public boolen removeItem(MediaProduct product) {
+		if)masterInventory.remove(product)) {
+			saveStock();
+			return true;
+		}
+		return false;
+	}
+	// Save Stock
+	public boolen saveStock(){
+		try{ 
+			FileWriter writer = new FileWriter(inventoryFIlePath);
+			for(MediaProduct product : masterInventory) {
+				writer.write(product.toCSVFFormat() + "\n");
+			}
+			writer.close();
+			return true;
+ 		}
+		catch (IOEcpection e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 	// Displays media stocks in the provided list
 	public void printListOfMediaProduct(ArrayList<MediaProduct>productList) {
