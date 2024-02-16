@@ -2,6 +2,8 @@ package homework3;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,12 +15,10 @@ import mediaProducts.CDRecordProduct;
 public class StockManagerSingleton 
 {
 	private static StockManagerSingleton instance = null;
-	//src/homework2/studentData.txt
 	private final static String inventoryFilePath = "src/homework3/inventory.csv";
 	
 	// Media storage generic
 	ArrayList<MediaProduct> masterInventory = new ArrayList<>();	
-	
 	
 	private StockManagerSingleton()
 	{
@@ -40,7 +40,6 @@ public class StockManagerSingleton
 			Scanner fileIn = new Scanner(new FileInputStream(inventoryFilePath));
 			String waste = fileIn.nextLine(); //assuming that the file element line is present
 												//get rid of that line
-			
 			while(fileIn.hasNext())
 			{
 				String nextLine = fileIn.nextLine();
@@ -51,7 +50,7 @@ public class StockManagerSingleton
 				double price = Double.parseDouble(token[2]); //parse numeric values
 				int year = Integer.parseInt(token[3]);
 				Genre fileGenre = Genre.valueOf(token[4]); //taking the string value and making it an enum
-
+				
 				masterInventory.add(new MediaProduct(title, price, year, fileGenre));
 			}
 			fileIn.close();
@@ -65,41 +64,40 @@ public class StockManagerSingleton
 		}
 	}
 	
-	
 	/* Methods */
-	
 	// Add Item
 	public boolean addItem(MediaProduct product) {
 		masterInventory.add(product);
 		return true; // No error checking right now
 	}
+	
 
 	// Remove Item
-	public boolen removeItem(MediaProduct product) {
-		if)masterInventory.remove(product)) {
+	public boolean removeItem(MediaProduct product) {
+		if(masterInventory.remove(product)) {
 			saveStock();
 			return true;
 		}
 		return false;
 	}
 	// Save Stock
-	public boolen saveStock(){
+	public boolean saveStock(){
 		try{ 
-			FileWriter writer = new FileWriter(inventoryFIlePath);
+			FileWriter writer = new FileWriter(inventoryFilePath);
 			for(MediaProduct product : masterInventory) {
 				writer.write(product.toCSVFFormat() + "\n");
 			}
 			writer.close();
 			return true;
  		}
-		catch (IOEcpection e) {
+		catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
  // Method to get media products below a certain price
-	public ArrayList<MediaProduct> get MediaProductBelowPrice(double maxPrice) {
-		return InventoryFilter.getMediaProductBelowPrice(masterInventory, macPrice);
+	public ArrayList<MediaProduct> getMediaProductBelowPrice(double maxPrice) {
+		return InventoryFilter.getMediaProductBelowPrice(masterInventory, maxPrice);
 
 	}
 	// Displays media stocks in the provided list
@@ -142,9 +140,6 @@ public class StockManagerSingleton
 			}
 		}
 		return tapes;
-	}
-
-
-	
+	}	
 }
 

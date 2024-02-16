@@ -19,8 +19,6 @@ public class Main {
 		boolean add3 = stockManagerSingleton.addItem(mediaProduct3);
 		boolean add4 = stockManagerSingleton.addItem(mediaProduct4);
 		
-		
-		
 		System.out.println(stockManagerSingleton.getVinylRecordList(stockManagerSingleton.masterInventory));
 		System.out.println(stockManagerSingleton.getTapeRecordList(stockManagerSingleton.masterInventory));
 		System.out.println(stockManagerSingleton.getCDRecordsList(stockManagerSingleton.masterInventory));
@@ -30,10 +28,6 @@ public class Main {
 		stockManagerSingleton.initializeStock();
 		
 		stockManagerSingleton.printListOfMediaProduct(stockManagerSingleton.masterInventory);
-		
-		
-		
-		
 	}
 
 }
