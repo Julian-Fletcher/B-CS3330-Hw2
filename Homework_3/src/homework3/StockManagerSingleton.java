@@ -39,7 +39,7 @@ public class StockManagerSingleton
 		{
 			Scanner fileIn = new Scanner(new FileInputStream(inventoryFilePath));
 			String waste = fileIn.nextLine(); //assuming that the file element line is present
-											//get rid of that line
+												//get rid of that line
 			
 			while(fileIn.hasNext())
 			{
