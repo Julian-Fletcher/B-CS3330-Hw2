@@ -58,6 +58,8 @@ public class MediaProduct {
 		return "Title: " + title + ", price: " + price + ", year: " + year + ", genre: " + genre + ".";
 	}
 	
-	
+	public String printFormat() {
+		return "" + title + "," + price + "," + year + "," + genre + "\n";
+	}
 	
 }
