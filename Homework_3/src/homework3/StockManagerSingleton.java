@@ -135,7 +135,11 @@ public class StockManagerSingleton
 			return false;
 		}
 	}
-	
+ // Method to get media products below a certain price
+	public ArrayList<MediaProduct> get MediaProductBelowPrice(double maxPrice) {
+		return InventoryFilter.getMediaProductBelowPrice(masterInventory, macPrice);
+
+	}
 	// Displays media stocks in the provided list
 	public void printListOfMediaProduct(ArrayList<MediaProduct>productList) {
 		// Iterate through the media provided media list
