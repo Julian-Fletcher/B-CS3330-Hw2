@@ -13,6 +13,7 @@ public class Main {
 		//System.out.println("Test Media Product toString():\n" + mediaProduct.toString());
 		
 		StockManagerSingleton stockManagerSingleton = StockManagerSingleton.getInstance();
+		stockManagerSingleton.initializeStock();
 		
 		boolean add = stockManagerSingleton.addItem(mediaProduct);
 		boolean add2 = stockManagerSingleton.addItem(mediaProduct2);
@@ -25,7 +26,8 @@ public class Main {
 		
 		System.out.println("Results: " + add + " " +  add2 + " " +  add3 + " " + add4);
 		
-		stockManagerSingleton.initializeStock();
+		
+		stockManagerSingleton.saveStock();
 		
 		stockManagerSingleton.printListOfMediaProduct(stockManagerSingleton.masterInventory);
 	}

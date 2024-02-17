@@ -84,8 +84,9 @@ public class StockManagerSingleton
 	public boolean saveStock(){
 		try{ 
 			FileWriter writer = new FileWriter(inventoryFilePath);
-			for(MediaProduct product : masterInventory) {
-				writer.write(product.toCSVFFormat() + "\n");
+			for(MediaProduct product : masterInventory) 
+			{
+				writer.write(product.getTitle() + "," + product.getPrice() + "," + product.getYear() + "," + product.getGenre() + "\n");
 			}
 			writer.close();
 			return true;
