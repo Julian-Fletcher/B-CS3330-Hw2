@@ -15,7 +15,7 @@ import mediaProducts.CDRecordProduct;
 public class StockManagerSingleton 
 {
 	private static StockManagerSingleton instance = null;
-	private final static String inventoryFilePath = "src/homework3/inventory.csv";
+	private final static String inventoryFilePath = "files/inventory.csv";
 	
 	// Media storage generic
 	ArrayList<MediaProduct> masterInventory = new ArrayList<>();	
@@ -38,7 +38,7 @@ public class StockManagerSingleton
 		try
 		{
 			Scanner fileIn = new Scanner(new FileInputStream(inventoryFilePath));
-			String waste = fileIn.nextLine(); //assuming that the file element line is present
+			fileIn.nextLine(); 					//assuming that the file element line is present - Julian changed to just skip the line
 												//get rid of that line
 			while(fileIn.hasNext())
 			{
@@ -51,7 +51,28 @@ public class StockManagerSingleton
 				int year = Integer.parseInt(token[3]);
 				Genre fileGenre = Genre.valueOf(token[4]); //taking the string value and making it an enum
 				
-				masterInventory.add(new MediaProduct(title, price, year, fileGenre));
+
+				// Create new product based on the type read from the file - allows the "filter-by" functions to work
+				switch (type) {
+				case "CD":
+					CDRecordProduct CDProduct = new CDRecordProduct(title, price, year, fileGenre);
+					masterInventory.add(CDProduct);
+					break;
+				case "Vinyl":
+					VinylRecordProduct VinylProduct = new VinylRecordProduct(title, price, year, fileGenre);
+					masterInventory.add(VinylProduct);
+					break;
+				case "Tape":
+					TapeRecordProduct TapeProduct = new TapeRecordProduct(title, price, year, fileGenre);
+					masterInventory.add(TapeProduct);
+					break;
+				default: 
+					System.out.println("Improper file format!");
+					return false;
+					
+				}
+				
+				//masterInventory.add(new MediaProduct(title, price, year, fileGenre));
 			}
 			fileIn.close();
 			return true;
@@ -84,9 +105,32 @@ public class StockManagerSingleton
 	public boolean saveStock(){
 		try{ 
 			FileWriter writer = new FileWriter(inventoryFilePath);
-			for(MediaProduct product : masterInventory) 
-			{
-				writer.write(product.getTitle() + "," + product.getPrice() + "," + product.getYear() + "," + product.getGenre() + "\n");
+			writer.write("Type,Title,Price,Year,Genre\n");
+			for(MediaProduct product : masterInventory) {
+				String fullType = product.getClass().getSimpleName();
+				
+				
+				// Hold the "cleaned" type
+				String type;
+				
+				// Sets type based on the object type
+				switch(fullType) {
+				case "CDRecordProduct":
+					type = "CD";
+					break;
+				case "VinylRecordProduct":
+					type = "Vinyl";
+					break;
+				case "TapeRecordProduct":
+					type = "Tape";
+					break;
+				default:
+					System.out.println("Error in type conversion in saveStock - check switch");
+					return false;
+				}
+				
+																	// Concatenate the type with the printFormat output
+				writer.write(type + "," + product.printFormat()); 	// printFormat contains the rest of the information in the expected formatting
 			}
 			writer.close();
 			return true;
@@ -96,11 +140,36 @@ public class StockManagerSingleton
 			return false;
 		}
 	}
- // Method to get media products below a certain price
-	public ArrayList<MediaProduct> getMediaProductBelowPrice(double maxPrice) {
-		return InventoryFilter.getMediaProductBelowPrice(masterInventory, maxPrice);
+	/*
+	 * Returns an array list of products below the given maxPrice
+	 */
+	public ArrayList<MediaProduct> getMediaProductBelowPrice(int maxPrice){
+		ArrayList<MediaProduct> mediaList = new ArrayList<MediaProduct>();
 
+		// Loop through all products in the inventory
+		// Check if their price is less than the max price
+		for(MediaProduct product : masterInventory) {
+			if(product.getPrice() < maxPrice) {
+				mediaList.add(product);
+			}
+		}
+		return mediaList;
 	}
+	
+	
+	public boolean updateItemPrice(MediaProduct product, double newPrice) {
+		// Loop through inv and update sought item
+		for(MediaProduct item : masterInventory) {
+			if(item.equals(product)) {
+				item.setPrice(newPrice);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	// Displays media stocks in the provided list
 	public void printListOfMediaProduct(ArrayList<MediaProduct>productList) {
 		// Iterate through the media provided media list
