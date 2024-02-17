@@ -26,6 +26,13 @@ public class MediaProduct {
 		this.genre = genre;
 	}
 	
+	public MediaProduct(MediaProduct product) {
+		this.title = product.title;
+		this.genre = product.genre;
+		this.price = product.price;
+		this.year = product.year;
+	}
+	
 	/* Getters and setters */
 	public String getTitle() {
 		return title;

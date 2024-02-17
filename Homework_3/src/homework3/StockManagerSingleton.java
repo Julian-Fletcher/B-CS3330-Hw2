@@ -150,7 +150,8 @@ public class StockManagerSingleton
 		// Check if their price is less than the max price
 		for(MediaProduct product : masterInventory) {
 			if(product.getPrice() < maxPrice) {
-				mediaList.add(product);
+				MediaProduct newProduct = new MediaProduct(product);
+				mediaList.add(newProduct);
 			}
 		}
 		return mediaList;
@@ -183,7 +184,9 @@ public class StockManagerSingleton
 		ArrayList<VinylRecordProduct> vinyls = new ArrayList<>();
 		for(MediaProduct product : productList){
 			if(product instanceof VinylRecordProduct){
-				vinyls.add((VinylRecordProduct) product);
+				VinylRecordProduct newProduct = new VinylRecordProduct((VinylRecordProduct)product);
+				
+				vinyls.add(newProduct);
 			}
 		}
 		return vinyls;
@@ -194,7 +197,8 @@ public class StockManagerSingleton
 		ArrayList<CDRecordProduct> cds = new ArrayList<>();
 		for(MediaProduct product : productList){
 			if(product instanceof CDRecordProduct){
-				cds.add((CDRecordProduct) product);
+				CDRecordProduct newProduct = new CDRecordProduct((CDRecordProduct)product);
+				cds.add(newProduct);
 			}
 		}
 		
@@ -206,7 +210,8 @@ public class StockManagerSingleton
 		ArrayList<TapeRecordProduct> tapes = new ArrayList<>();
 		for(MediaProduct product : productList){
 			if(product instanceof TapeRecordProduct){
-				tapes.add((TapeRecordProduct) product);
+				TapeRecordProduct newProduct = new TapeRecordProduct((TapeRecordProduct)product);
+				tapes.add(newProduct);
 			}
 		}
 		return tapes;
